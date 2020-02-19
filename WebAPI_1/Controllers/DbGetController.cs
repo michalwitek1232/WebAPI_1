@@ -52,23 +52,25 @@ namespace WebAPI_1.Controllers
 
         [HttpPut("{id}")]
 
-        public void EditValue(int id, [FromBody] Users user)
+        public IActionResult EditValue(int id, [FromBody] Users user)
         {
             var data = _context.Users.Find(id);
             data.Imie = user.Imie;
             _context.Users.Update(data);
             _context.SaveChanges();
+            return Ok();
         }
 
         //usuwanie wartości
 
         [HttpDelete("{id}")]
 
-        public void DeleteValue(int id)
+        public IActionResult DeleteValue(int id)
         {
             var data = _context.Users.Find(id);
             _context.Users.Remove(data);
             _context.SaveChanges();
+            return Ok();
         }
     }
 }
