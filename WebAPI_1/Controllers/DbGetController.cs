@@ -12,11 +12,11 @@ namespace WebAPI_1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DataCTX : ControllerBase
+    public class DataCTXController : ControllerBase
     {
         private DataContext _context; //pole prywatne
 
-        public DataCTX(DataContext context)
+        public DataCTXController(DataContext context)
         {
             _context = context;
         }
