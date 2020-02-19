@@ -37,6 +37,7 @@ namespace WebAPI_1.Controllers
             return Ok(values); //zwracanie
         }
 
+
         //dodawanie do tabeli
 
         [HttpPost]
