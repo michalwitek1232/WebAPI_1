@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebAPI_1.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Sql;
 
 namespace WebAPI_1
 {
@@ -23,10 +26,11 @@ namespace WebAPI_1
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public object ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddDbContext<DataContext>(s => s.UseSqlServer("ConnectionString"));
 
+            services.AddControllers();
 
             services.AddMvc(services => services.EnableEndpointRouting = false);
 
