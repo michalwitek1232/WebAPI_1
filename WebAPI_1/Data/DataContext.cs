@@ -12,5 +12,7 @@ namespace WebAPI_1.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { } //wywołuje konst bazowy i przekazuje opcje
 
         public DbSet<Users> Users { get ; set; }
+
+        public DbSet<User> User { get; set; }
     }
 }

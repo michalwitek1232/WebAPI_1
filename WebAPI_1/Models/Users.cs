@@ -7,7 +7,7 @@ namespace WebAPI_1.Models
 {
     public class Users
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
         public string Login { get; set; }

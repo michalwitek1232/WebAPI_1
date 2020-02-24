@@ -14,7 +14,7 @@ namespace WebAPI_1.Controllers
     [ApiController]
     public class DataCTXController : ControllerBase
     {
-        private DataContext _context; //pole prywatne
+        private readonly DataContext _context; //pole prywatne
 
         public DataCTXController(DataContext context)
         {
@@ -33,7 +33,7 @@ namespace WebAPI_1.Controllers
 
         public IActionResult GetValue(int id)
         {
-            var values = _context.Users.FirstOrDefault(x => x.id == id);
+            var values = _context.Users.FirstOrDefault(x => x.Id == id);
             return Ok(values); //zwracanie
         }
 
