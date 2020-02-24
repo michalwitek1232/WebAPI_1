@@ -42,9 +42,9 @@ namespace WebAPI_1.Controllers
 
         [HttpPost]
 
-        public void AddValue([FromBody] Users user)
+        public async void AddValue([FromBody] Users user)
         {
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
             _context.SaveChanges(); //z modelu
 
         }
@@ -53,9 +53,9 @@ namespace WebAPI_1.Controllers
 
         [HttpPut("{id}")]
 
-        public IActionResult EditValue(int id, [FromBody] Users user)
+        public async Task<IActionResult> EditValue(int id, [FromBody] Users user)
         {
-            var data = _context.Users.Find(id);
+            var data = await _context.Users.FindAsync(id);
             data.Imie = user.Imie;
             _context.Users.Update(data);
             _context.SaveChanges();
@@ -66,9 +66,9 @@ namespace WebAPI_1.Controllers
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteValue(int id)
+        public async Task<IActionResult> DeleteValue(int id)
         {
-            var data = _context.Users.Find(id);
+            var data = await _context.Users.FindAsync(id);
             _context.Users.Remove(data);
             _context.SaveChanges();
             return Ok();
