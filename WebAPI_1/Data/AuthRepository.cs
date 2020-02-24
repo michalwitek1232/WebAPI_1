@@ -63,12 +63,12 @@ namespace WebAPI_1.Data
             }
         }
         #endregion
-        private void CreatePasswordHashSalt(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        private void CreatePasswordHashSalt(string password, out byte[] PasswordHash, out byte[] PasswordSalt)
         {
             using (var hamac = new System.Security.Cryptography.HMACSHA512())
             {
-                passwordSalt = hamac.Key;
-                passwordHash = hamac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                PasswordSalt = hamac.Key;
+                PasswordHash = hamac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 

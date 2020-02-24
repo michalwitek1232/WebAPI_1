@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebAPI_1.Models
+﻿namespace WebAPI_1.Models
 {
     public class User
     {
