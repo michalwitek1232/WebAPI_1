@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Providers.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI_1.Data;
@@ -10,6 +11,7 @@ using WebAPI_1.Models;
 
 namespace WebAPI_1.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DataCTXController : ControllerBase
@@ -21,14 +23,16 @@ namespace WebAPI_1.Controllers
             _context = context;
         }
 
+        //[AllowAnonymous]
         [HttpGet]
-
         public ActionResult<IEnumerable<string>> Get()
         {
             var values = _context.Users.ToList();
             return Ok(values); //zwracanie
         }
 
+        //Get id
+        [AllowAnonymous]
         [HttpGet("{id}")]
 
         public IActionResult GetValue(int id)

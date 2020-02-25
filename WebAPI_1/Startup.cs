@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using WebAPI_1.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Sql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebAPI_1
 {
@@ -38,11 +41,23 @@ namespace WebAPI_1
 
             services.AddScoped<IAuthRepository, AuthRepository>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
+            {
+                Options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             if (env.IsDevelopment())
@@ -50,19 +65,20 @@ namespace WebAPI_1
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            //app.UseAuthorization();
-
+            app.UseAuthentication();
+            app.UseAuthorization(); // Add it here
             app.UseEndpoints(endpoints =>
             {
               endpoints.MapControllers();
             });
 
-
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
+                routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
+            }
+            );
         }
     }
 }
