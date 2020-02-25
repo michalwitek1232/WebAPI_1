@@ -10,7 +10,7 @@ using WebAPI_1.Models;
 
 namespace WebAPI_1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Auth]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -21,21 +21,40 @@ namespace WebAPI_1.Controllers
             _repository = repository;
         }
 
-        [HttpPost("register")]
+        [HttpPost("{register}")]
 
 
-        public async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO)
+        //public async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO)
+        //{
+        //    UserForRegisterDTO.Username = UserForRegisterDTO.Username.ToLower();
+
+        //    if (await _repository.UserExist(UserForRegisterDTO.Username))
+        //        return BadRequest("Użytkownik o takiej nazwie już istnieje");
+
+        //    var userToCreate = new Models.User { Username = UserForRegisterDTO.Username };
+
+        //    var createdUser = await _repository.Register(userToCreate, UserForRegisterDTO.Password);
+
+        //    return StatusCode(201);
+        //}
+
+        [HttpPost("{Register}")]
+        public ActionResult<object> Register([FromBody] DTOs.User userModel)
         {
-            UserForRegisterDTO.Username = UserForRegisterDTO.Username.ToLower();
+            try
+            {
+                UserForRegisterDTO.Username = userModel.Username;
 
-            if (await _repository.UserExist(UserForRegisterDTO.Username))
-                return BadRequest("Użytkownik o takiej nazwie już istnieje");
+                UserForRegisterDTO.Username = userModel.Password;
 
-            var userToCreate = new User { Username = UserForRegisterDTO.Username };
+                return UserForRegisterDTO.Username;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
+            return null;
 
-            var createdUser = await _repository.Register(userToCreate, UserForRegisterDTO.Password);
-
-            return StatusCode(201);
         }
     }
 }
