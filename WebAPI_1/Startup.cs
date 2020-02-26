@@ -73,12 +73,12 @@ namespace WebAPI_1
               endpoints.MapControllers();
             });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
-                routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
-            }
-            );
+            app.UseMvc();//routes =>
+            //{
+            //    routes.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
+            //    routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
+            //}
+            
         }
     }
 }

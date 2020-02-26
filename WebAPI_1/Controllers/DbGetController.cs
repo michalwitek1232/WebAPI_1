@@ -23,7 +23,7 @@ namespace WebAPI_1.Controllers
             _context = context;
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {

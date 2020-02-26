@@ -28,7 +28,7 @@ namespace WebAPI_1.Controllers
             _repository = repository;
             _config = config;
         }
-
+        
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
