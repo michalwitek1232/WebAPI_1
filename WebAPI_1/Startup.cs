@@ -1,22 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using WebAPI_1.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Sql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebAPI_1.Models;
+using AutoMapper;
 
 namespace WebAPI_1
 {
@@ -34,13 +27,21 @@ namespace WebAPI_1
         {
             services.AddDbContext<DataContext>(s => s.UseSqlServer(Configuration.GetConnectionString("Default1")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); ;
 
-            services.AddMvc(services => services.EnableEndpointRouting = false);
-            
+            services.AddMvc(options => options.EnableEndpointRouting = false).AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.PropertyNamingPolicy = null;
+                o.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            }); ;
+
             services.AddCors();
 
             services.AddTransient<Seed>();
+
+            services.AddAutoMapper();
 
             services.AddScoped<IAuthRepository, AuthRepository>();
 
@@ -72,7 +73,6 @@ namespace WebAPI_1
                 app.UseDeveloperExceptionPage();
             }
 
-            seed.SeedUsers();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization(); // Add it here
