@@ -8,6 +8,17 @@ using WebAPI_1.Models;
 
 namespace WebAPI_1.Data
 {
+    public static class Helpers
+    {
+        public static void CreatePasswordHashSalt(string password, out byte[] PasswordHash, out byte[] PasswordSalt)
+        {
+            using (var hamac = new System.Security.Cryptography.HMACSHA512())
+            {
+                PasswordSalt = hamac.Key;
+                PasswordHash = hamac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+    }
     public class AuthRepository : IAuthRepository
     {
         public readonly DataContext _context;
@@ -40,7 +51,7 @@ namespace WebAPI_1.Data
         public async Task<User> Register(User user, string password)
         {
             byte[] passwordHash, passwordSalt;
-            CreatePasswordHashSalt(password, out passwordHash, out passwordSalt);
+            Helpers.CreatePasswordHashSalt(password, out passwordHash, out passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -63,14 +74,7 @@ namespace WebAPI_1.Data
             }
         }
         #endregion
-        private void CreatePasswordHashSalt(string password, out byte[] PasswordHash, out byte[] PasswordSalt)
-        {
-            using (var hamac = new System.Security.Cryptography.HMACSHA512())
-            {
-                PasswordSalt = hamac.Key;
-                PasswordHash = hamac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
+       
 
         private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
         {

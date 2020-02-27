@@ -16,6 +16,7 @@ using System.Data.Sql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebAPI_1.Models;
 
 namespace WebAPI_1
 {
@@ -39,6 +40,8 @@ namespace WebAPI_1
             
             services.AddCors();
 
+            services.AddTransient<Seed>();
+
             services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
@@ -55,7 +58,7 @@ namespace WebAPI_1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seed)
         {
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -65,6 +68,7 @@ namespace WebAPI_1
                 app.UseDeveloperExceptionPage();
             }
 
+            seed.SeedUsers();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization(); // Add it here
@@ -73,12 +77,7 @@ namespace WebAPI_1
               endpoints.MapControllers();
             });
 
-            app.UseMvc();//routes =>
-            //{
-            //    routes.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
-            //    routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
-            //}
-            
+            app.UseMvc();
         }
     }
 }
