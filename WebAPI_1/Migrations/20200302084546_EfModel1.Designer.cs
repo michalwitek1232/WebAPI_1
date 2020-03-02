@@ -10,8 +10,8 @@ using WebAPI_1.Data;
 namespace WebAPI_1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200227074608_USerExtended")]
-    partial class USerExtended
+    [Migration("20200302084546_EfModel1")]
+    partial class EfModel1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,35 @@ namespace WebAPI_1.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebAPI_1.Models.EventModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Ends")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nazwa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Eventmodels");
+                });
 
             modelBuilder.Entity("WebAPI_1.Models.ProfileImage", b =>
                 {
@@ -37,7 +66,7 @@ namespace WebAPI_1.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -113,11 +142,20 @@ namespace WebAPI_1.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("WebAPI_1.Models.EventModel", b =>
+                {
+                    b.HasOne("WebAPI_1.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+                });
+
             modelBuilder.Entity("WebAPI_1.Models.ProfileImage", b =>
                 {
-                    b.HasOne("WebAPI_1.Models.User", null)
+                    b.HasOne("WebAPI_1.Models.User", "User")
                         .WithMany("ProfileImage")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

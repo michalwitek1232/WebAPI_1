@@ -38,5 +38,17 @@ namespace WebAPI_1.Models
             _context.SaveChanges();
         }
 
+        public void SeedEvents()
+        {
+            var eventData = File.ReadAllText("./Data/EventSeedData.json");
+            var eventsSerialized = JsonConvert.DeserializeObject<List <EventModel> >(eventData);
+
+            foreach (var events in eventsSerialized )
+            {
+                _context.Add(events);
+            }
+
+            _context.SaveChanges();
+        }
     }
 }

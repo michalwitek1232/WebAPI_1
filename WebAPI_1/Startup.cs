@@ -49,6 +49,8 @@ namespace WebAPI_1
 
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IEventRepository, EventRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options =>
             {
                 Options.TokenValidationParameters = new TokenValidationParameters

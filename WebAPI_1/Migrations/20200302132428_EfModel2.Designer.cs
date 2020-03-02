@@ -10,8 +10,8 @@ using WebAPI_1.Data;
 namespace WebAPI_1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200227080222_ExtendedUSer")]
-    partial class ExtendedUSer
+    [Migration("20200302132428_EfModel2")]
+    partial class EfModel2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,33 @@ namespace WebAPI_1.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebAPI_1.Models.EventModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Ends")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nazwa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Eventmodels");
+                });
 
             modelBuilder.Entity("WebAPI_1.Models.ProfileImage", b =>
                 {

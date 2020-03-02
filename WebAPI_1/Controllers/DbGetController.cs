@@ -77,5 +77,24 @@ namespace WebAPI_1.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        //[HttpPost("{fakeDB}")]
+
+        //public IActionResult FakeDB()
+        //{
+        //    Seed seed = new Seed(_context);
+        //    seed.SeedUsers();
+        //    return Ok();
+        //}
+
+        [HttpPost("{fakeEvents}")]
+
+        public IActionResult FakeEvents()
+        {
+            SeedBox seed1 = new SeedBox(_context);
+            seed1.SeedEvents();
+            return Ok();
+        }
+
     }
 }

@@ -3,10 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAPI_1.Migrations
 {
-    public partial class MainBranch : Migration
+    public partial class EfModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Eventmodels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nazwa = table.Column<string>(nullable: true),
+                    Opis = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Ends = table.Column<DateTime>(nullable: false),
+                    Creator = table.Column<string>(nullable: true),
+                    Creator_ID = table.Column<int>(nullable: false),
+                    Location = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Eventmodels", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -46,7 +65,7 @@ namespace WebAPI_1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfileImage",
+                name: "Profileimages",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -54,29 +73,32 @@ namespace WebAPI_1.Migrations
                     Url = table.Column<string>(nullable: true),
                     AddedDate = table.Column<DateTime>(nullable: false),
                     IsMain = table.Column<bool>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileImage", x => x.Id);
+                    table.PrimaryKey("PK_Profileimages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProfileImage_User_UserId",
+                        name: "FK_Profileimages_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfileImage_UserId",
-                table: "ProfileImage",
+                name: "IX_Profileimages_UserId",
+                table: "Profileimages",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProfileImage");
+                name: "Eventmodels");
+
+            migrationBuilder.DropTable(
+                name: "Profileimages");
 
             migrationBuilder.DropTable(
                 name: "Users");

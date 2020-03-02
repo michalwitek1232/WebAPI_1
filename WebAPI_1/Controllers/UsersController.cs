@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI_1.Data;
@@ -15,6 +16,7 @@ namespace WebAPI_1.Controllers
     {
         private readonly IUserRepository _repo;
         private readonly IMapper _mapper;
+        private DataContext _context;
 
         public UsersController(IUserRepository repo, IMapper mapper)
         {
@@ -22,6 +24,7 @@ namespace WebAPI_1.Controllers
             _mapper = mapper;
         }
 
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
@@ -41,5 +44,6 @@ namespace WebAPI_1.Controllers
 
             return Ok(userToReturn);
         }
+
     }
 }

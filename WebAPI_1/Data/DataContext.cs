@@ -16,5 +16,7 @@ namespace WebAPI_1.Data
         public DbSet<User> User { get; set; }
 
         public DbSet<ProfileImage> Profileimages { get; set; }
+
+        public DbSet<EventModel> Eventmodels { get; set; }
     }
 }
