@@ -10,8 +10,8 @@ using WebAPI_1.Data;
 namespace WebAPI_1.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200302132428_EfModel2")]
-    partial class EfModel2
+    [Migration("20200303141238_Cleaner1")]
+    partial class Cleaner1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,16 +31,16 @@ namespace WebAPI_1.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Ends")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nazwa")
+                    b.Property<string>("Ownerusername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Opis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerUsername")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

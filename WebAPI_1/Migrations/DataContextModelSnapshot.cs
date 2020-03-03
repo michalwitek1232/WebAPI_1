@@ -29,16 +29,16 @@ namespace WebAPI_1.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Ends")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nazwa")
+                    b.Property<string>("Ownerusername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Opis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OwnerUsername")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

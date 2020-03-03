@@ -16,6 +16,12 @@ namespace WebAPI_1.Data
             _context = context;
         }
 
+        public async Task<IEnumerable<EventModel>> GetCustomEvents(string name)
+        {
+            var customevents = _context.Eventmodels.Where(x => x.Ownerusername == name);
+            return customevents;
+        }
+
         public async Task<EventModel> GetEvent(int id)
         {
             var eventObj = await _context.Eventmodels.FirstOrDefaultAsync(u => u.Id == id);

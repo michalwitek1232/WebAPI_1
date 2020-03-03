@@ -47,6 +47,17 @@ namespace WebAPI_1.Controllers
             return Ok(eventOne);
         }
 
+        [AllowAnonymous]
+        [Route("userEvent/{nazwa}")]
+        [HttpGet]
+
+        public async Task<IActionResult> GetCustomEvent(string nazwa)
+        {
+            var customEvents = await _repo.GetCustomEvents(nazwa);
+
+            return Ok(customEvents);
+        }
+
         //usuwanie eventów
 
         [Authorize]
@@ -54,9 +65,12 @@ namespace WebAPI_1.Controllers
 
         public async Task<IActionResult> DeleteValue(int event_id)
         {
-            var data = await _context.Eventmodels.FindAsync(event_id);
-            _context.Eventmodels.Remove(data);
-            _context.SaveChanges();
+            var data = await _repo.GetEvent(event_id);
+
+            _repo.Delete<EventModel>(data);
+
+            await _repo.SaveAll();
+
             return Ok();
         }
 
@@ -70,7 +84,7 @@ namespace WebAPI_1.Controllers
             {
                 _repo.Delete(i);                
             }
-            _repo.SaveAll();
+            await _repo.SaveAll();
             
             return Ok();
         }
@@ -82,9 +96,9 @@ namespace WebAPI_1.Controllers
         {
             var eventToCreate = new EventModel
             {
-                Nazwa = eventToCreateDto.Nazwa,
-                Opis = eventToCreateDto.Opis,
-                OwnerUsername = eventToCreateDto.OwnerUsername,
+                Title = eventToCreateDto.Nazwa,
+                Description = eventToCreateDto.Opis,
+                Ownerusername = eventToCreateDto.OwnerUsername,
                 Created = System.DateTime.Now,
                 Ends = eventToCreateDto.Ends
             };

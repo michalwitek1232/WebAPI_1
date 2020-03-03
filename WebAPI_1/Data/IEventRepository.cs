@@ -9,5 +9,7 @@ namespace WebAPI_1.Data
     {
         Task<IEnumerable<EventModel>> GetEvents();
         Task<EventModel> GetEvent(int id);
+
+        Task<IEnumerable<EventModel>> GetCustomEvents(string name);
     }
 }

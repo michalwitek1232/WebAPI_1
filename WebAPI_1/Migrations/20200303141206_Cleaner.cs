@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAPI_1.Migrations
 {
-    public partial class EfModel : Migration
+    public partial class Cleaner : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +13,11 @@ namespace WebAPI_1.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nazwa = table.Column<string>(nullable: true),
-                    Opis = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Ends = table.Column<DateTime>(nullable: false),
-                    Creator = table.Column<string>(nullable: true),
-                    Creator_ID = table.Column<int>(nullable: false),
-                    Location = table.Column<string>(nullable: true)
+                    Ownerusername = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
