@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI_1.Data;
 using WebAPI_1.DTOs;
+using WebAPI_1.MailSystem;
 using WebAPI_1.Models;
 
 namespace WebAPI_1.Controllers
@@ -34,7 +35,10 @@ namespace WebAPI_1.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            
+            MailClient ml = new MailClient();
+
+            ml.SendMail(userForRegisterDto.Username);
+
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
             if (await _repository.UserExist(userForRegisterDto.Username))
